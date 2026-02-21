@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth/config';
 import { db } from '@/lib/db';
 import { checkIns, habits } from '@/lib/db/schema';
-import { eq, and, gte, lte } from 'drizzle-orm';
+import { eq, and, gte } from 'drizzle-orm';
+import { calculateStreak } from '@/lib/streaks/calculator';
+import { checkMilestones } from '@/lib/milestones/checker';
 
 // GET /api/checkins?habit_id=X&from=DATE&to=DATE
 export async function GET(request: NextRequest) {
@@ -32,7 +34,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (to) {
-      conditions.push(lte(checkIns.date, to));
+      conditions.push(eq(checkIns.date, to));
     }
 
     const checkInsList = await db.query.checkIns.findMany({
@@ -75,7 +77,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Habit not found' }, { status: 404 });
     }
 
-    // Get today's date in YYYY-MM-DD format
+    const userId = parseInt(session.user.id);
     const today = new Date().toISOString().split('T')[0];
 
     // Check if check-in already exists for today
@@ -87,6 +89,8 @@ export async function POST(request: NextRequest) {
     });
 
     let result;
+    let isNewMilestone = false;
+    let newMilestones: any[] = [];
 
     if (existingCheckIn) {
       // Update existing check-in
@@ -102,14 +106,29 @@ export async function POST(request: NextRequest) {
       // Create new check-in
       result = await db.insert(checkIns).values({
         habitId: habit_id,
-        userId: parseInt(session.user.id),
+        userId,
         date: today,
         completed: completed ?? false,
         value: value ?? null,
       }).returning();
     }
 
-    return NextResponse.json(result[0], { status: existingCheckIn ? 200 : 201 });
+    // Check for milestones if completing a habit
+    if (completed) {
+      const streakInfo = await calculateStreak(habit_id, userId);
+      const earnedMilestones = await checkMilestones(habit_id, userId, streakInfo.currentStreak);
+      
+      if (earnedMilestones.length > 0) {
+        isNewMilestone = true;
+        newMilestones = earnedMilestones;
+      }
+    }
+
+    return NextResponse.json({
+      ...result[0],
+      milestones: newMilestones,
+      hasNewMilestone: isNewMilestone,
+    }, { status: existingCheckIn ? 200 : 201 });
   } catch (error) {
     console.error('Error creating/updating check-in:', error);
     return NextResponse.json({ error: 'Failed to create check-in' }, { status: 500 });
