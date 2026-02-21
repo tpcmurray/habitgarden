@@ -1,0 +1,45 @@
+{
+  "name": "habitgarden",
+  "version": "1.0.0",
+  "description": "A cozy, emoji-powered habit tracker that turns personal consistency into a living visual world. Track up to 3 habits, each represented by an emoji buddy that lives in a shared garden. The garden thrives when you stay consistent and wilts when you don't.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tpcmurray/habitgarden.git"
+  },
+  "keywords": ["habit-tracker", "pwa", "nextjs", "drizzle"],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tpcmurray/habitgarden/issues"
+  },
+  "homepage": "https://github.com/tpcmurray/habitgarden#readme",
+  "dependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.16",
+    "drizzle-orm": "^0.29.0",
+    "next": "^14.2.0",
+    "next-auth": "^5.0.0-beta.0",
+    "postcss": "^8.4.32",
+    "postgres": "^3.4.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.3.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.20.0",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.2.0"
+  }
+}
