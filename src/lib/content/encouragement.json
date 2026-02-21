@@ -1,0 +1,28 @@
+{
+  "streak_active": [
+    "{streak} days. {buddy} is proud of you, and frankly so am I.",
+    "You've done {habit_name} {streak} days in a row. That's not luck. That's you.",
+    "{completion_7d} out of 7 this week. {buddy} is thriving.",
+    "Day {streak}. {days_since_start} days ago this habit didn't exist in your life.",
+    "{total_checkins} total check-ins on {habit_name}. Every one of those was a choice you made.",
+    "Your best streak is {best_streak} days. Current streak: {streak}. Closing in.",
+    "{streak} days. At this point {buddy} would be worried if you *didn't* show up.",
+    "Week over week, you're at {completion_7d}/7. That's a pattern, not a fluke."
+  ],
+  "just_checked_in": [
+    "Done. {buddy} is happy. That's all there is to it.",
+    "Checked in. Another brick in the wall.",
+    "Day {streak} is in the books.",
+    "{buddy} says thanks.",
+    "That's {completion_7d} out of 7 this week. Nice.",
+    "Logged. Your garden is a little greener today."
+  ],
+  "comeback": [
+    "You're back. That's the only thing that matters.",
+    "{buddy} missed you. But {buddy} doesn't hold grudges.",
+    "Streak's at 1. That's a start. It's always a start.",
+    "The hardest check-in is the one after a miss. This was that one. It's done now.",
+    "Welcome back. Your garden remembers what it looked like when you were here.",
+    "Day 1 again. But day 1 with {total_checkins} check-ins of experience behind you."
+  ]
+}

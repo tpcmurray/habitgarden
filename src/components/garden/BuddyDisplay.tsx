@@ -7,6 +7,7 @@ interface BuddyDisplayProps {
   mood: Mood;
   showAnimation?: boolean;
   size?: 'small' | 'medium' | 'large';
+  hat?: string | null;
 }
 
 const moodEmojis: Record<Mood, string> = {
@@ -24,6 +25,7 @@ export function BuddyDisplay({
   mood,
   showAnimation = false,
   size = 'medium',
+  hat = null,
 }: BuddyDisplayProps) {
   const moodEmoji = moodEmojis[mood];
 
@@ -57,6 +59,16 @@ export function BuddyDisplay({
 
   return (
     <div className="relative inline-flex">
+      {/* Hat (positioned above the buddy) */}
+      {hat && (
+        <span
+          className={`absolute -top-4 left-1/2 -translate-x-1/2 ${size === 'small' ? 'text-lg' : size === 'medium' ? 'text-2xl' : 'text-4xl'}`}
+          role="img"
+          aria-label={`Hat: ${hat}`}
+        >
+          {hat}
+        </span>
+      )}
       <span
         className={`${sizes.buddy} ${getAnimationClass()}`}
         role="img"

@@ -5,6 +5,7 @@ import { habits } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { getAllHabitMoods } from '@/lib/garden/moods';
 import { calculate14DayRate, calculateAverageCompletionRate } from '@/lib/garden/calculations';
+import { getHabitMilestones } from '@/lib/milestones/checker';
 
 export async function GET() {
   const session = await auth();
@@ -29,6 +30,14 @@ export async function GET() {
       userHabits.map(async (habit) => {
         const moodInfo = moodInfos.find((m) => m.habitId === habit.id);
         const completionRate14Days = await calculate14DayRate(habit.id, userId);
+        
+        // Get milestones for this habit
+        const habitMilestones = await getHabitMilestones(habit.id, userId);
+        
+        // Separate milestones by type
+        const hat = habitMilestones.find(m => (m.cosmetic as any)?.type === 'hat');
+        const companion = habitMilestones.find(m => (m.cosmetic as any)?.type === 'companion');
+        const landmark = habitMilestones.find(m => (m.cosmetic as any)?.type === 'landmark');
 
         return {
           habitId: habit.id,
@@ -43,6 +52,11 @@ export async function GET() {
           completionRate7Days: moodInfo?.completionRate7Days || 0,
           completionRate14Days,
           sortOrder: habit.sortOrder,
+          milestones: {
+            hat: (hat?.cosmetic as any)?.value || null,
+            companion: (companion?.cosmetic as any)?.value || null,
+            landmark: (landmark?.cosmetic as any)?.value || null,
+          },
         };
       })
     );

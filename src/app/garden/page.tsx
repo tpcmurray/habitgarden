@@ -1,7 +1,7 @@
 import { auth } from '@/lib/auth/config';
 import { redirect } from 'next/navigation';
 import { db } from '@/lib/db';
-import { habits } from '@/lib/db/schema';
+import { habits, milestones } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
 import { getAllHabitMoods } from '@/lib/garden/moods';
 import { calculate14DayRate, calculateAverageCompletionRate } from '@/lib/garden/calculations';
@@ -33,6 +33,16 @@ export default async function GardenPage() {
       const moodInfo = moodInfos.find((m) => m.habitId === habit.id);
       const completionRate14Days = await calculate14DayRate(habit.id, userId);
 
+      // Get milestones for this habit
+      const habitMilestones = await db.query.milestones.findMany({
+        where: eq(milestones.habitId, habit.id),
+      });
+
+      // Separate milestones by type
+      const hat = habitMilestones.find(m => (m.cosmetic as any)?.type === 'hat');
+      const companion = habitMilestones.find(m => (m.cosmetic as any)?.type === 'companion');
+      const landmark = habitMilestones.find(m => (m.cosmetic as any)?.type === 'landmark');
+
       return {
         habitId: habit.id,
         name: habit.name,
@@ -45,6 +55,11 @@ export default async function GardenPage() {
         },
         completionRate7Days: moodInfo?.completionRate7Days || 0,
         completionRate14Days,
+        milestones: {
+          hat: (hat?.cosmetic as any)?.value || null,
+          companion: (companion?.cosmetic as any)?.value || null,
+          landmark: (landmark?.cosmetic as any)?.value || null,
+        },
       };
     })
   );
@@ -110,6 +125,7 @@ export default async function GardenPage() {
                             mood={zone.mood.mood}
                             showAnimation={zone.mood.animation === 'bounce' || zone.mood.animation === 'pulse'}
                             size="medium"
+                            hat={zone.milestones?.hat}
                           />
 
                           {/* Info */}
@@ -144,6 +160,15 @@ export default async function GardenPage() {
 
                         {/* Environment elements */}
                         <div className="mt-3 flex gap-1 text-sm">
+                          {/* Landmark */}
+                          {zone.milestones?.landmark && (
+                            <span className="mr-2">{zone.milestones.landmark}</span>
+                          )}
+                          {/* Companion */}
+                          {zone.milestones?.companion && (
+                            <span className="mr-2">{zone.milestones.companion}</span>
+                          )}
+                          {/* Zone state elements */}
                           {zoneState === 'thriving' && <span>🌳🌻🦋</span>}
                           {zoneState === 'healthy' && <span>🌿🌸</span>}
                           {zoneState === 'okay' && <span>🌱</span>}

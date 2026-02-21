@@ -44,3 +44,4 @@ drizzle/
 # Misc
 *.log
 *.pem
+.VSCodeCounter
