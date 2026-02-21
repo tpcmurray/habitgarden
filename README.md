@@ -2,7 +2,7 @@
 
 A cozy, emoji-powered habit tracker that turns personal consistency into a living visual world. Track up to 3 habits, each represented by an emoji buddy that lives in a shared garden. The garden thrives when you stay consistent and wilts when you don't.
 
-![Habit Garden Preview](docs\habit-garden-preview.png)
+![Habit Garden Preview](docs/habit-garden-preview.png)
 
 ## Features
 
