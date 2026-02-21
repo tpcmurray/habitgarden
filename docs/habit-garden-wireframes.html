@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habit Garden — Wireframes</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f0;
+      color: #1a1a1a;
+      padding: 40px 20px;
+    }
+
+    .page-header {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .screen-section {
+      max-width: 900px;
+      margin: 0 auto 80px;
+    }
+
+    .screen-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .screen-section .description {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .phone-frame {
+      width: 375px;
+      min-height: 667px;
+      background: #fff;
+      border-radius: 32px;
+      border: 3px solid #222;
+      overflow: hidden;
+      margin: 0 auto;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    .phone-frames-row {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .phone-frames-row .phone-frame {
+      margin: 0;
+    }
+
+    .phone-frame-label {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 12px;
+      font-weight: 500;
+    }
+
+    .phone-frame-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Status bar */
+    .status-bar {
+      height: 44px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    /* Navigation bar */
+    .nav-bar {
+      height: 50px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+
+    .nav-bar .title {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .nav-bar .nav-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    /* Tab bar */
+    .tab-bar {
+      height: 56px;
+      background: #fff;
+      border-top: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 0.65rem;
+      color: #999;
+    }
+
+    .tab-item.active {
+      color: #2d8a4e;
+    }
+
+    .tab-item .tab-icon {
+      font-size: 1.2rem;
+    }
+
+    /* Content area */
+    .content {
+      padding: 16px;
+      padding-bottom: 72px;
+    }
+
+    /* ===== SCREEN: Garden View ===== */
+    .garden-container {
+      background: linear-gradient(180deg, #e8f4fd 0%, #d4edda 40%, #c3dbbe 100%);
+      border-radius: 16px;
+      padding: 16px;
+      min-height: 380px;
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .garden-sky {
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      letter-spacing: 8px;
+    }
+
+    .garden-zones {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      min-height: 260px;
+    }
+
+    .garden-zone {
+      flex: 1;
+      background: rgba(255,255,255,0.3);
+      border-radius: 12px;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+
+    .garden-zone .buddy {
+      font-size: 2.5rem;
+      position: relative;
+    }
+
+    .garden-zone .mood-badge {
+      position: absolute;
+      bottom: -4px;
+      right: -8px;
+      font-size: 1.1rem;
+      background: #fff;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .garden-zone .zone-name {
+      font-size: 0.7rem;
+      color: #555;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .garden-zone .zone-plants {
+      font-size: 1.2rem;
+      letter-spacing: 4px;
+      text-align: center;
+    }
+
+    .garden-zone .zone-cosmetics {
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      color: #888;
+    }
+
+    .garden-zone .empty-zone {
+      color: #999;
+      font-size: 0.75rem;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .garden-zone .empty-zone .plus {
+      font-size: 2rem;
+      color: #ccc;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .garden-ground {
+      text-align: center;
+      font-size: 1.2rem;
+      letter-spacing: 4px;
+      margin-top: 8px;
+    }
+
+    .checkin-prompt {
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .checkin-prompt .prompt-emoji {
+      font-size: 1.6rem;
+    }
+
+    .checkin-prompt .prompt-text {
+      flex: 1;
+    }
+
+    .checkin-prompt .prompt-text .prompt-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .checkin-prompt .prompt-text .prompt-sub {
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    .checkin-prompt .check-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #2d8a4e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #2d8a4e;
+    }
+
+    .checkin-prompt .check-btn.done {
+      background: #2d8a4e;
+      color: #fff;
+      border-color: #2d8a4e;
+    }
+
+    /* ===== SCREEN: Onboarding ===== */
+    .onboarding-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 520px;
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+    .onboarding-emoji {
+      font-size: 4rem;
+      margin-bottom: 24px;
+    }
+
+    .onboarding-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .onboarding-body {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 280px;
+    }
+
+    .onboarding-btn {
+      background: #2d8a4e;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 48px;
+      font-size: 1rem;
+      font-weight: 600;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .onboarding-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .onboarding-dots .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ddd;
+    }
+
+    .onboarding-dots .dot.active {
+      background: #2d8a4e;
+    }
+
+    /* ===== SCREEN: Create Habit ===== */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e5e5e5;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      background: #fafafa;
+    }
+
+    .form-toggle-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .form-toggle {
+      flex: 1;
+      padding: 10px 12px;
+      border: 2px solid #e5e5e5;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 0.85rem;
+      background: #fafafa;
+      color: #666;
+    }
+
+    .form-toggle.selected {
+      border-color: #2d8a4e;
+      background: #edf7f0;
+      color: #2d8a4e;
+      font-weight: 600;
+    }
+
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .emoji-option {
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      border-radius: 10px;
+      background: #fafafa;
+      border: 2px solid #eee;
+    }
+
+    .emoji-option.selected {
+      border-color: #2d8a4e;
+      background: #edf7f0;
+    }
+
+    /* ===== SCREEN: Habit Detail ===== */
+    .habit-hero {
+      text-align: center;
+      padding: 24px 0 16px;
+    }
+
+    .habit-hero .hero-buddy {
+      font-size: 4rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .habit-hero .hero-mood {
+      position: absolute;
+      bottom: 0;
+      right: -12px;
+      font-size: 1.5rem;
+      background: #fff;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .habit-hero .hero-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .habit-hero .hero-streak {
+      font-size: 0.85rem;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .habit-hero .hero-cosmetics {
+      font-size: 1.3rem;
+      letter-spacing: 4px;
+      margin-top: 8px;
+    }
+
+    .big-checkin-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .big-checkin-btn.ready {
+      background: #2d8a4e;
+      color: #fff;
+    }
+
+    .big-checkin-btn.done {
+      background: #edf7f0;
+      color: #2d8a4e;
+      border: 2px solid #2d8a4e;
+    }
+
+    /* Science card */
+    .science-card {
+      background: #f8f6f0;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      border-left: 3px solid #e8c547;
+    }
+
+    .science-card .science-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #b8960a;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .science-card .science-text {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: #555;
+    }
+
+    /* Encouragement toast */
+    .encouragement-toast {
+      background: #2d8a4e;
+      color: #fff;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    /* Stats summary */
+    .stats-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: #fafafa;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .stat-card .stat-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #2d8a4e;
+    }
+
+    .stat-card .stat-label {
+      font-size: 0.65rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    /* ===== SCREEN: Analytics ===== */
+    .heatmap-container {
+      margin-bottom: 20px;
+    }
+
+    .heatmap-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: repeat(13, 1fr);
+      gap: 3px;
+    }
+
+    .heatmap-cell {
+      aspect-ratio: 1;
+      border-radius: 3px;
+      background: #eee;
+    }
+
+    .heatmap-cell.complete { background: #2d8a4e; }
+    .heatmap-cell.partial { background: #a8d5ba; }
+    .heatmap-cell.missed { background: #f0c0c0; }
+    .heatmap-cell.future { background: #f5f5f5; }
+
+    .heatmap-legend {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 0.7rem;
+      color: #888;
+    }
+
+    .heatmap-legend span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .heatmap-legend .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    /* ===== SCREEN: Measured Input ===== */
+    .measured-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-radius: 20px 20px 0 0;
+      padding: 24px;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
+    }
+
+    .measured-overlay .measured-buddy {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+    }
+
+    .measured-overlay .measured-prompt {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    .measured-overlay .measured-input-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .measured-overlay .measured-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      width: 120px;
+      text-align: center;
+      border: none;
+      border-bottom: 3px solid #2d8a4e;
+      color: #1a1a1a;
+    }
+
+    .measured-overlay .measured-unit {
+      font-size: 1rem;
+      color: #888;
+    }
+
+    .measured-overlay .measured-target {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #999;
+      margin-bottom: 20px;
+    }
+
+    /* ===== SCREEN: Celebration ===== */
+    .celebration-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 32px;
+      z-index: 10;
+    }
+
+    .celebration-emoji {
+      font-size: 5rem;
+      margin-bottom: 16px;
+    }
+
+    .celebration-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .celebration-body {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .celebration-cosmetic {
+      font-size: 3rem;
+      margin: 16px 0;
+    }
+
+    /* ===== SCREEN: Notification Examples ===== */
+    .notification-example {
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .notification-example .notif-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .notification-example .notif-content .notif-app {
+      font-size: 0.65rem;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .notification-example .notif-content .notif-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .notification-example .notif-content .notif-body {
+      font-size: 0.8rem;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    /* ===== SCREEN: Settings ===== */
+    .settings-group {
+      margin-bottom: 24px;
+    }
+
+    .settings-group-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #999;
+      font-weight: 600;
+      margin-bottom: 8px;
+      padding-left: 4px;
+    }
+
+    .settings-item {
+      background: #fff;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .settings-item:first-of-type {
+      border-radius: 10px 10px 0 0;
+    }
+
+    .settings-item:last-of-type {
+      border-radius: 0 0 10px 10px;
+      border-bottom: none;
+    }
+
+    .settings-item:only-of-type {
+      border-radius: 10px;
+    }
+
+    .settings-item .settings-label {
+      font-size: 0.9rem;
+    }
+
+    .settings-item .settings-value {
+      font-size: 0.85rem;
+      color: #999;
+    }
+
+    .toggle-track {
+      width: 44px;
+      height: 26px;
+      border-radius: 13px;
+      background: #ddd;
+      position: relative;
+    }
+
+    .toggle-track.on {
+      background: #2d8a4e;
+    }
+
+    .toggle-track .toggle-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .toggle-track.on .toggle-thumb {
+      left: 20px;
+    }
+
+    /* ===== SCREEN: Auth/Login ===== */
+    .login-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 560px;
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+    .login-logo {
+      font-size: 4rem;
+      margin-bottom: 8px;
+    }
+
+    .login-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .login-subtitle {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 48px;
+    }
+
+    .login-btn {
+      width: 100%;
+      max-width: 280px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      border: 2px solid #e5e5e5;
+      background: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    .login-btn .btn-icon {
+      font-size: 1.2rem;
+    }
+
+    /* Annotation system */
+    .annotation {
+      background: #fffde7;
+      border: 1px dashed #e8c547;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      color: #8a7400;
+      margin: 12px 0;
+      line-height: 1.4;
+    }
+
+    .annotation strong {
+      color: #6d5c00;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 2px dashed #ddd;
+      margin: 60px auto;
+      max-width: 200px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1>🌱 Habit Garden — Wireframes</h1>
+    <p>Mobile-first PWA wireframes. All screens at 375px width (iPhone SE/standard).</p>
+  </div>
+
+  <!-- ==================== LOGIN ==================== -->
+  <div class="screen-section">
+    <h2>1. Login / Welcome</h2>
+    <p class="description">First screen for unauthenticated users. Clean, simple, two auth options.</p>
+    
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>●●● WiFi 🔋</span>
+      </div>
+      <div class="login-content">
+        <div class="login-logo">🌱</div>
+        <div class="login-title">Habit Garden</div>
+        <div class="login-subtitle">Grow your habits, grow your garden</div>
+        <div class="login-btn">
+          <span class="btn-icon">🔵</span>
+          Continue with Google
+        </div>
+        <div class="login-btn">
+          <span class="btn-icon">🍎</span>
+          Continue with Apple
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ==================== ONBOARDING ==================== -->
+  <div class="screen-section">
+    <h2>2. Onboarding Flow</h2>
+    <p class="description">4-step guided setup shown once after first sign-in. Each step is a full-screen card with progress dots.</p>
+
+    <div class="phone-frames-row">
+      
+      <!-- Step 1: Welcome -->
+      <div class="phone-frame-wrapper">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>●●● WiFi 🔋</span>
+          </div>
+          <div class="onboarding-content">
+            <div class="onboarding-emoji">🌱🌻🌳</div>
+            <div class="onboarding-title">Welcome to<br>Habit Garden</div>
+            <div class="onboarding-body">Your habits grow a living garden. Stay consistent and watch it thrive. Fall off and it'll miss you.</div>
+            <div class="onboarding-btn">Let's grow something →</div>
+            <div class="onboarding-dots">
+              <div class="dot active"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-frame-label">Step 1: Welcome</div>
+      </div>
+
+      <!-- Step 2: Create Habit -->
+      <div class="phone-frame-wrapper">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>●●● WiFi 🔋</span>
+          </div>
+          <div class="content" style="padding-top: 24px;">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <div style="font-size: 1.3rem; font-weight: 700;">Your First Habit</div>
+              <div style="font-size: 0.85rem; color: #888;">What do you want to work on?</div>
+            </div>
+            
+            <div class="form-group">
+              <div class="form-label">Direction</div>
+              <div class="form-toggle-group">
+                <div class="form-toggle selected">🌱 Build a habit</div>
+                <div class="form-toggle">🚫 Break a habit</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">Habit Name</div>
+              <div class="form-input" style="color: #333;">Read for 20 minutes</div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">Type</div>
+              <div class="form-toggle-group">
+                <div class="form-toggle">✅ Yes / No</div>
+                <div class="form-toggle selected">📊 Track a number</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-toggle-group">
+                <div style="flex: 2;">
+                  <div class="form-label">Target</div>
+                  <div class="form-input" style="color: #333;">20</div>
+                </div>
+                <div style="flex: 1;">
+                  <div class="form-label">Unit</div>
+                  <div class="form-input" style="color: #333;">minutes</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">Frequency</div>
+              <div class="form-toggle-group">
+                <div class="form-toggle selected" style="font-size: 0.75rem;">Daily</div>
+                <div class="form-toggle" style="font-size: 0.75rem;">Weekdays</div>
+                <div class="form-toggle" style="font-size: 0.75rem;">Weekends</div>
+                <div class="form-toggle" style="font-size: 0.75rem;">Custom</div>
+              </div>
+            </div>
+
+            <div class="onboarding-btn" style="width: 100%; max-width: 100%;">Next →</div>
+            <div class="onboarding-dots" style="justify-content: center;">
+              <div class="dot"></div>
+              <div class="dot active"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-frame-label">Step 2: Create Habit</div>
+      </div>
+
+      <!-- Step 3: Choose Buddy -->
+      <div class="phone-frame-wrapper">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>●●● WiFi 🔋</span>
+          </div>
+          <div class="content" style="padding-top: 24px;">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <div style="font-size: 1.3rem; font-weight: 700;">Choose a Buddy</div>
+              <div style="font-size: 0.85rem; color: #888;">This friend will grow with your habit</div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 20px;">
+              <div style="font-size: 3.5rem;">📚</div>
+              <div style="font-size: 0.85rem; color: #2d8a4e; font-weight: 600; margin-top: 4px;">Read for 20 minutes</div>
+            </div>
+
+            <div class="form-label">Pick an emoji</div>
+            <div class="emoji-grid">
+              <div class="emoji-option">🏃</div>
+              <div class="emoji-option selected">📚</div>
+              <div class="emoji-option">🦉</div>
+              <div class="emoji-option">💧</div>
+              <div class="emoji-option">🧘</div>
+              <div class="emoji-option">🎸</div>
+              <div class="emoji-option">✍️</div>
+              <div class="emoji-option">🍎</div>
+              <div class="emoji-option">💪</div>
+              <div class="emoji-option">🧹</div>
+              <div class="emoji-option">🐕</div>
+              <div class="emoji-option">🎨</div>
+              <div class="emoji-option">🧠</div>
+              <div class="emoji-option">🌅</div>
+              <div class="emoji-option">💤</div>
+              <div class="emoji-option">📱</div>
+              <div class="emoji-option">🚭</div>
+              <div class="emoji-option">🥗</div>
+              <div class="emoji-option">🧑‍💻</div>
+              <div class="emoji-option">🏋️</div>
+              <div class="emoji-option">🚶</div>
+              <div class="emoji-option">🎯</div>
+              <div class="emoji-option">🌿</div>
+              <div class="emoji-option">☕</div>
+            </div>
+            
+            <div style="margin-top: 16px;">
+              <div class="onboarding-btn" style="width: 100%; max-width: 100%;">Next →</div>
+            </div>
+            <div class="onboarding-dots" style="justify-content: center; margin-top: 12px;">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot active"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-frame-label">Step 3: Choose Buddy</div>
+      </div>
+
+      <!-- Step 4: Notifications -->
+      <div class="phone-frame-wrapper">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>●●● WiFi 🔋</span>
+          </div>
+          <div class="onboarding-content">
+            <div class="onboarding-emoji">🔔</div>
+            <div class="onboarding-title">Stay on Track</div>
+            <div class="onboarding-body">Get gentle reminders from your buddy. Set a time and they'll check in with you.</div>
+            
+            <div style="background: #fafafa; border-radius: 10px; padding: 16px; width: 100%; max-width: 280px; margin-bottom: 16px;">
+              <div class="form-label">Reminder time</div>
+              <div class="form-input" style="text-align: center; font-size: 1.1rem; font-weight: 600;">8:00 PM</div>
+            </div>
+
+            <div class="annotation" style="max-width: 280px;">
+              <strong>📱 iPhone users:</strong> To get notifications, tap "Share" then "Add to Home Screen" after setup.
+            </div>
+
+            <div class="onboarding-btn">Enable notifications</div>
+            <div style="margin-top: 8px; font-size: 0.8rem; color: #999; cursor: pointer;">Skip for now</div>
+            <div class="onboarding-dots">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot active"></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-frame-label">Step 4: Notifications</div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ==================== GARDEN VIEW ==================== -->
+  <div class="screen-section">
+    <h2>3. Garden View (Main Screen)</h2>
+    <p class="description">The home screen. Shows the garden with all buddies, their moods, and the shared environment. Below the garden, today's check-in prompts for uncompleted habits. Tapping a buddy in the garden or the check-in row triggers check-in.</p>
+
+    <div class="phone-frames-row">
+
+      <!-- Healthy garden -->
+      <div class="phone-frame-wrapper">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>●●● WiFi 🔋</span>
+          </div>
+          <div class="nav-bar">
+            <div class="title">🌱 My Garden</div>
+            <div class="nav-icon">⚙️</div>
+          </div>
+          <div class="content">
+            <div class="garden-container">
+              <div class="garden-sky">☀️ · · 🦋 · ·</div>
+              <div class="garden-zones">
+                <div class="garden-zone">
+                  <div class="buddy">🏃<div class="mood-badge">😄</div></div>
+                  <div class="zone-name">Exercise</div>
+                  <div class="zone-cosmetics">🎩 🐕</div>
+                  <div class="zone-plants">🌳🌻🌸</div>
+                  <div class="zone-plants">🌿🌷</div>
+                </div>
+                <div class="garden-zone">
+                  <div class="buddy">📚<div class="mood-badge">😊</div></div>
+                  <div class="zone-name">Reading</div>
+                  <div class="zone-cosmetics">🕶️</div>
+                  <div class="zone-plants">🌿🌼</div>
+                  <div class="zone-plants">🌱🌱</div>
+                </div>
+                <div class="garden-zone">
+                  <div class="buddy">🦉<div class="mood-badge">😟</div></div>
+                  <div class="zone-name">No phone</div>
+                  <div class="zone-plants">🌱</div>
+                  <div class="zone-plants">🍂</div>
+                </div>
+              </div>
+              <div class="garden-ground">🌿 · 🪨 · 🌿 · · 🍄 · 🌿</div>
+            </div>
+
+            <div class="annotation">
+              <strong>Check-in area:</strong> Habits not yet completed today appear below as tappable rows.
+            </div>
+
+            <div class="checkin-prompt">
+              <div class="prompt-emoji">📚</div>
+              <div class="prompt-text">
+                <div class="prompt-name">Reading</div>
+                <div class="prompt-sub">Goal: 20 minutes</div>
+              </div>
+              <div class="check-btn">○</div>
+            </div>
+
+            <div class="checkin-prompt">
+              <div class="prompt-emoji">🦉</div>
+              <div class="prompt-text">
+                <div class="prompt-name">No phone after 10pm</div>
+                <div class="prompt-sub">Yes / No</div>
+              </div>
+              <div class="check-btn">○</div>
+            </div>
+
+            <div class="checkin-prompt" style="opacity: 0.5;">
+              <div class="prompt-emoji">🏃</div>
+              <div class="prompt-text">
+                <div class="prompt-name">Exercise</div>
+                <div class="prompt-sub">Done today ✓</div>
+              </div>
+              <div class="check-btn done">✓</div>
+            </div>
+          </div>
+
+          <div class="tab-bar">
+            <div class="tab-item active">
+              <span class="tab-icon">🌱</span>
+              Garden
+            </div>
+            <div class="tab-item">
+              <span class="tab-icon">📊</span>
+              Stats
+            </div>
+            <div class="tab-item">
+              <span class="tab-icon">⚙️</span>
+              Settings
+            </div>
+          </div>
+        </div>
+        <div class="phone-frame-label">Healthy Garden (2 of 3 checked in)</div>
+      </div>
+
+      <!-- Neglected garden -->
+      <div class="phone-frame-wrapper">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>●●● WiFi 🔋</span>
+          </div>
+          <div class="nav-bar">
+            <div class="title">🌱 My Garden</div>
+            <div class="nav-icon">⚙️</div>
+          </div>
+          <div class="content">
+            <div class="garden-container" style="background: linear-gradient(180deg, #e8e8e8 0%, #d4d4c4 40%, #c4bfb0 100%);">
+              <div class="garden-sky">🌧️ · · · · ·</div>
+              <div class="garden-zones">
+                <div class="garden-zone" style="background: rgba(255,255,255,0.15);">
+                  <div class="buddy">🏃<div class="mood-badge">😢</div></div>
+                  <div class="zone-name">Exercise</div>
+                  <div class="zone-cosmetics">🎩 🐕</div>
+                  <div class="zone-plants">🍂🥀</div>
+                  <div class="zone-plants">🍂</div>
+                </div>
+                <div class="garden-zone" style="background: rgba(255,255,255,0.15);">
+                  <div class="buddy">📚<div class="mood-badge">😴</div></div>
+                  <div class="zone-name">Reading</div>
+                  <div class="zone-cosmetics">🕶️</div>
+                  <div class="zone-plants">🕸️</div>
+                  <div class="zone-plants">🍂💨</div>
+                </div>
+                <div class="garden-zone" style="background: rgba(255,255,255,0.15);">
+                  <div class="buddy">🦉<div class="mood-badge">😢</div></div>
+                  <div class="zone-name">No phone</div>
+                  <div class="zone-plants">🕸️🍂</div>
+                </div>
+              </div>
+              <div class="garden-ground">🍂 · · 🍂 · · · 🍂 · ·</div>
+            </div>
+
+            <div class="checkin-prompt">
+              <div class="prompt-emoji">🏃</div>
+              <div class="prompt-text">
+                <div class="prompt-name">Exercise</div>
+                <div class="prompt-sub">3 days missed</div>
+              </div>
+              <div class="check-btn">○</div>
+            </div>
+
+            <div class="checkin-prompt">
+              <div class="prompt-emoji">📚</div>
+              <div class="prompt-text">
+                <div class="prompt-name">Reading</div>
+                <div class="prompt-sub">7 days missed</div>
+              </div>
+              <div class="check-btn">○</div>
+            </div>
+
+            <div class="checkin-prompt">
+              <div class="prompt-emoji">🦉</div>
+              <div class="prompt-text">
+                <div class="prompt-name">No phone after 10pm</div>
+                <div class="prompt-sub">4 days missed</div>
+              </div>
+              <div class="check-btn">○</div>
+            </div>
+          </div>
+
+          <div class="tab-bar">
+            <div class="tab-item active">
+              <span class="tab-icon">🌱</span>
+              Garden
+            </div>
+            <div class="tab-item">
+              <span class="tab-icon">📊</span>
+              Stats
+            </div>
+            <div class="tab-item">
+              <span class="tab-icon">⚙️</span>
+              Settings
+            </div>
+          </div>
+        </div>
+        <div class="phone-frame-label">Neglected Garden (all habits struggling)</div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ==================== HABIT DETAIL ==================== -->
+  <div class="screen-section">
+    <h2>4. Habit Detail View</h2>
+    <p class="description">Accessed by tapping a buddy in the garden or a check-in row. Shows buddy hero, check-in button, contextual messages, and stats summary. This is where habit science and encouragement messages live.</p>
+
+    <div class="phone-frames-row">
+
+      <!-- Active streak, not yet checked in -->
+      <div class="phone-frame-wrapper">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>●●● WiFi 🔋</span>
+          </div>
+          <div class="nav-bar">
+            <span style="font-size: 1.2rem; cursor: pointer;">←</span>
+            <div class="title">Reading</div>
+            <div class="nav-icon">✏️</div>
+          </div>
+          <div class="content">
+            <div class="habit-hero">
+              <div class="hero-buddy">📚<div class="hero-mood">😊</div></div>
+              <div class="hero-name">Reading</div>
+              <div class="hero-streak">🔥 12-day streak</div>
+              <div class="hero-cosmetics">🕶️</div>
+            </div>
+
+            <div class="big-checkin-btn ready">Check in — How many minutes?</div>
+
+            <div class="science-card">
+              <div class="science-label">💡 Habit Science</div>
+              <div class="science-text">You're past the first few days. That matters more than you think — most people who attempt a new habit don't make it past day 3.</div>
+            </div>
+
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-value">12</div>
+                <div class="stat-label">Current streak</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value">12</div>
+                <div class="stat-label">Best streak</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value">86%</div>
+                <div class="stat-label">This week</div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.8rem; color: #2d8a4e; font-weight: 600; text-align: center; cursor: pointer;">
+              View full analytics →
+            </div>
+          </div>
+
+          <div class="tab-bar">
+            <div class="tab-item">
+              <span class="tab-icon">🌱</span>
+              Garden
+            </div>
+            <div class="tab-item">
+              <span class="tab-icon">📊</span>
+              Stats
+            </div>
+            <div class="tab-item">
+              <span class="tab-icon">⚙️</span>
+              Settings
+            </div>
+          </div>
+        </div>
+        <div class="phone-frame-label">Active Streak — Ready to Check In</div>
+      </div>
+
+      <!-- Just checked in -->
+      <div class="phone-frame-wrapper">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>●●● WiFi 🔋</span>
+          </div>
+          <div class="nav-bar">
+            <span style="font-size: 1.2rem; cursor: pointer;">←</span>
+            <div class="title">Reading</div>
+            <div class="nav-icon">✏️</div>
+          </div>
+          <div class="content">
+            <div class="habit-hero">
+              <div class="hero-buddy">📚<div class="hero-mood">😄</div></div>
+              <div class="hero-name">Reading</div>
+              <div class="hero-streak">🔥 13-day streak</div>
+              <div class="hero-cosmetics">🕶️</div>
+            </div>
+
+            <div class="big-checkin-btn done">✓ 25 minutes — Done for today</div>
+
+            <div class="encouragement-toast">
+              Day 13. 13 days ago this habit didn't exist in your life. 📚 is proud of you, and frankly so am I.
+            </div>
+
+            <div class="science-card">
+              <div class="science-label">💡 Habit Science</div>
+              <div class="science-text">Boredom is the biggest threat to habit maintenance, not difficulty. If the habit feels boring, that's actually a sign it's becoming automatic.</div>
+            </div>
+
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-value">13</div>
+                <div class="stat-label">Current streak</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value">13</div>
+                <div class="stat-label">Best streak</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value">100%</div>
+                <div class="stat-label">This week</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-bar">
+            <div class="tab-item">
+              <span class="tab-icon">🌱</span>
+              Garden
+            </div>
+            <div class="tab-item">
+              <span class="tab-icon">📊</span>
+              Stats
+            </div>
+            <div class="tab-item">
+              <span class="tab-icon">⚙️</span>
+              Settings
+            </div>
+          </div>
+        </div>
+        <div class="phone-frame-label">Just Checked In — Encouragement Shown</div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ==================== MEASURED INPUT ==================== -->
+  <div class="screen-section">
+    <h2>5. Measured Habit Input</h2>
+    <p class="description">Bottom sheet overlay that appears when checking in on a measured habit. Simple number input with target context.</p>
+
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>●●● WiFi 🔋</span>
+      </div>
+      <div class="nav-bar">
+        <span style="font-size: 1.2rem;">←</span>
+        <div class="title">Reading</div>
+        <div class="nav-icon">✏️</div>
+      </div>
+      <div class="content" style="opacity: 0.3;">
+        <div class="habit-hero">
+          <div class="hero-buddy">📚<div class="hero-mood">😊</div></div>
+        </div>
+      </div>
+      <div class="measured-overlay">
+        <div class="measured-buddy">📚</div>
+        <div class="measured-prompt">How many minutes did you read?</div>
+        <div class="measured-input-row">
+          <div class="measured-number">25</div>
+          <div class="measured-unit">minutes</div>
+        </div>
+        <div class="measured-target">Goal: 20 minutes</div>
+        <div class="onboarding-btn" style="width: 100%; max-width: 100%;">Log it ✓</div>
+        <div style="text-align: center; margin-top: 10px; font-size: 0.8rem; color: #999; cursor: pointer;">Cancel</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ==================== MILESTONE CELEBRATION ==================== -->
+  <div class="screen-section">
+    <h2>6. Milestone Celebration</h2>
+    <p class="description">Full-screen overlay that appears when a streak milestone is reached. Shows the earned cosmetic and a congratulatory message. Dismisses on tap.</p>
+
+    <div class="phone-frames-row">
+
+      <div class="phone-frame-wrapper">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>●●● WiFi 🔋</span>
+          </div>
+          <div class="celebration-overlay">
+            <div class="celebration-emoji">🎉</div>
+            <div class="celebration-title">7-Day Streak!</div>
+            <div class="celebration-body">🏃 has been on fire for a full week.<br>That's earned a reward.</div>
+            <div class="celebration-cosmetic">🎩</div>
+            <div class="celebration-body" style="color: #2d8a4e; font-weight: 600;">🏃 earned a hat!</div>
+            <div style="margin-top: 24px;">
+              <div class="onboarding-btn">Back to garden →</div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-frame-label">7-Day: Accessory Earned</div>
+      </div>
+
+      <div class="phone-frame-wrapper">
+        <div class="phone-frame">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>●●● WiFi 🔋</span>
+          </div>
+          <div class="celebration-overlay">
+            <div class="celebration-emoji">🏆</div>
+            <div class="celebration-title">30-Day Streak!</div>
+            <div class="celebration-body">📚 has shown up for an entire month.<br>A new friend has arrived.</div>
+            <div class="celebration-cosmetic">🐈</div>
+            <div class="celebration-body" style="color: #2d8a4e; font-weight: 600;">📚 got a companion!</div>
+            <div style="margin-top: 24px;">
+              <div class="onboarding-btn">Back to garden →</div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-frame-label">30-Day: Companion Earned</div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ==================== ANALYTICS ==================== -->
+  <div class="screen-section">
+    <h2>7. Analytics View</h2>
+    <p class="description">Per-habit analytics accessed from habit detail. Calendar heatmap, streak stats, and completion rates.</p>
+
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>●●● WiFi 🔋</span>
+      </div>
+      <div class="nav-bar">
+        <span style="font-size: 1.2rem; cursor: pointer;">←</span>
+        <div class="title">📚 Reading Stats</div>
+        <span></span>
+      </div>
+      <div class="content">
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-value">13</div>
+            <div class="stat-label">Current streak</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">21</div>
+            <div class="stat-label">Best streak</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">47</div>
+            <div class="stat-label">Total check-ins</div>
+          </div>
+        </div>
+
+        <div class="heatmap-container">
+          <div class="heatmap-label">Last 90 days</div>
+          <div class="heatmap-grid">
+            <!-- Row 1 -->
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell missed"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell partial"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell missed"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <!-- Row 2 -->
+            <div class="heatmap-cell missed"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell partial"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell missed"></div>
+            <div class="heatmap-cell missed"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <!-- Row 3 -->
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell missed"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell partial"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <!-- Row 4 -->
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell missed"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell future"></div>
+            <div class="heatmap-cell future"></div>
+            <div class="heatmap-cell future"></div>
+            <!-- Row 5 -->
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell partial"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell missed"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell future"></div>
+            <div class="heatmap-cell future"></div>
+            <div class="heatmap-cell future"></div>
+            <!-- Row 6 -->
+            <div class="heatmap-cell missed"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell partial"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell future"></div>
+            <div class="heatmap-cell future"></div>
+            <div class="heatmap-cell future"></div>
+            <!-- Row 7 -->
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell missed"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell complete"></div>
+            <div class="heatmap-cell future"></div>
+            <div class="heatmap-cell future"></div>
+            <div class="heatmap-cell future"></div>
+          </div>
+          <div class="heatmap-legend">
+            <span><div class="legend-dot" style="background: #2d8a4e;"></div> Complete</span>
+            <span><div class="legend-dot" style="background: #a8d5ba;"></div> Partial</span>
+            <span><div class="legend-dot" style="background: #f0c0c0;"></div> Missed</span>
+            <span><div class="legend-dot" style="background: #f5f5f5;"></div> Future</span>
+          </div>
+        </div>
+
+        <div class="heatmap-label">Completion Rate</div>
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-value">86%</div>
+            <div class="stat-label">7 days</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">78%</div>
+            <div class="stat-label">30 days</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">72%</div>
+            <div class="stat-label">90 days</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value">70%</div>
+            <div class="stat-label">All time</div>
+          </div>
+        </div>
+
+        <div class="annotation">
+          <strong>For measured habits:</strong> An additional section shows average value vs. target with a simple trend line chart.
+        </div>
+
+        <div class="heatmap-label" style="margin-top: 20px;">Milestones</div>
+        <div style="display: flex; gap: 12px; align-items: center; background: #fafafa; border-radius: 10px; padding: 12px;">
+          <div style="text-align: center;">
+            <div style="font-size: 1.5rem;">🕶️</div>
+            <div style="font-size: 0.6rem; color: #888;">Day 7</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.5rem; opacity: 0.25;">🐈</div>
+            <div style="font-size: 0.6rem; color: #ccc;">Day 30</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 1.5rem; opacity: 0.25;">🏰</div>
+            <div style="font-size: 0.6rem; color: #ccc;">Day 100</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-bar">
+        <div class="tab-item">
+          <span class="tab-icon">🌱</span>
+          Garden
+        </div>
+        <div class="tab-item active">
+          <span class="tab-icon">📊</span>
+          Stats
+        </div>
+        <div class="tab-item">
+          <span class="tab-icon">⚙️</span>
+          Settings
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ==================== NOTIFICATIONS ==================== -->
+  <div class="screen-section">
+    <h2>8. Notification Examples</h2>
+    <p class="description">Push notifications as they'd appear on a phone lock screen. Each type has a distinct personality.</p>
+
+    <div style="max-width: 375px; margin: 0 auto;">
+      <div class="notification-example">
+        <div class="notif-icon">📚</div>
+        <div class="notif-content">
+          <div class="notif-app">Habit Garden</div>
+          <div class="notif-title">Time to read!</div>
+          <div class="notif-body">📚 is settling in for the evening. Join them?</div>
+        </div>
+      </div>
+
+      <div class="notification-example">
+        <div class="notif-icon">🦉</div>
+        <div class="notif-content">
+          <div class="notif-app">Habit Garden</div>
+          <div class="notif-title">Almost bedtime</div>
+          <div class="notif-body">🦉 is wondering if you'll put the phone down tonight. There's still time.</div>
+        </div>
+      </div>
+
+      <div class="notification-example">
+        <div class="notif-icon">🔥</div>
+        <div class="notif-content">
+          <div class="notif-app">Habit Garden</div>
+          <div class="notif-title">7-day streak!</div>
+          <div class="notif-body">🏃 just earned a 🎩! Come see your garden.</div>
+        </div>
+      </div>
+
+      <div class="notification-example">
+        <div class="notif-icon">🌱</div>
+        <div class="notif-content">
+          <div class="notif-app">Habit Garden</div>
+          <div class="notif-title">Your garden misses you</div>
+          <div class="notif-body">It's been 3 days. Your buddies are getting lonely. One check-in is all it takes.</div>
+        </div>
+      </div>
+
+      <div class="notification-example">
+        <div class="notif-icon">📊</div>
+        <div class="notif-content">
+          <div class="notif-app">Habit Garden • Weekly Summary</div>
+          <div class="notif-title">Your week in review</div>
+          <div class="notif-body">🏃 5/7 · 📚 7/7 · 🦉 4/7 — Your garden is looking pretty good this week.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ==================== SETTINGS ==================== -->
+  <div class="screen-section">
+    <h2>9. Settings</h2>
+    <p class="description">App settings, notification preferences, habit management, and account options.</p>
+
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>●●● WiFi 🔋</span>
+      </div>
+      <div class="nav-bar">
+        <span></span>
+        <div class="title">Settings</div>
+        <span></span>
+      </div>
+      <div class="content" style="background: #f5f5f0;">
+        <div class="settings-group">
+          <div class="settings-group-title">Notifications</div>
+          <div class="settings-item">
+            <span class="settings-label">Push notifications</span>
+            <div class="toggle-track on"><div class="toggle-thumb"></div></div>
+          </div>
+          <div class="settings-item">
+            <span class="settings-label">Missed check-in nudge</span>
+            <div class="toggle-track on"><div class="toggle-thumb"></div></div>
+          </div>
+          <div class="settings-item">
+            <span class="settings-label">Weekly summary</span>
+            <div class="toggle-track on"><div class="toggle-thumb"></div></div>
+          </div>
+          <div class="settings-item">
+            <span class="settings-label">Re-engagement reminders</span>
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-group-title">My Habits</div>
+          <div class="settings-item">
+            <span class="settings-label">🏃 Exercise</span>
+            <span class="settings-value">Active →</span>
+          </div>
+          <div class="settings-item">
+            <span class="settings-label">📚 Reading</span>
+            <span class="settings-value">Active →</span>
+          </div>
+          <div class="settings-item">
+            <span class="settings-label">🦉 No phone after 10pm</span>
+            <span class="settings-value">Active →</span>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-group-title">Archived Habits</div>
+          <div class="settings-item">
+            <span class="settings-label">🥗 Eat a salad</span>
+            <span class="settings-value">Archived →</span>
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <div class="settings-group-title">Account</div>
+          <div class="settings-item">
+            <span class="settings-label">Signed in as</span>
+            <span class="settings-value">terry@email.com</span>
+          </div>
+          <div class="settings-item">
+            <span class="settings-label">Timezone</span>
+            <span class="settings-value">America/St_Johns</span>
+          </div>
+          <div class="settings-item">
+            <span class="settings-label" style="color: #cc3333;">Delete account</span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-bar">
+        <div class="tab-item">
+          <span class="tab-icon">🌱</span>
+          Garden
+        </div>
+        <div class="tab-item">
+          <span class="tab-icon">📊</span>
+          Stats
+        </div>
+        <div class="tab-item active">
+          <span class="tab-icon">⚙️</span>
+          Settings
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ==================== EMPTY / NEW USER GARDEN ==================== -->
+  <div class="screen-section">
+    <h2>10. New User Garden (1 habit)</h2>
+    <p class="description">What the garden looks like right after onboarding with just one habit. Empty zones show "Plant a habit" prompts.</p>
+
+    <div class="phone-frame">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>●●● WiFi 🔋</span>
+      </div>
+      <div class="nav-bar">
+        <div class="title">🌱 My Garden</div>
+        <div class="nav-icon">⚙️</div>
+      </div>
+      <div class="content">
+        <div class="garden-container" style="background: linear-gradient(180deg, #e8f4fd 0%, #ddeedd 40%, #d0e4c8 100%);">
+          <div class="garden-sky">🌤️ · · · · ·</div>
+          <div class="garden-zones">
+            <div class="garden-zone">
+              <div class="buddy">📚<div class="mood-badge">😊</div></div>
+              <div class="zone-name">Reading</div>
+              <div class="zone-plants">🌱</div>
+            </div>
+            <div class="garden-zone">
+              <div class="empty-zone">
+                <span class="plus">+</span>
+                Plant a habit
+              </div>
+            </div>
+            <div class="garden-zone">
+              <div class="empty-zone">
+                <span class="plus">+</span>
+                Plant a habit
+              </div>
+            </div>
+          </div>
+          <div class="garden-ground">🌱 · · · · · · · · ·</div>
+        </div>
+
+        <div class="checkin-prompt">
+          <div class="prompt-emoji">📚</div>
+          <div class="prompt-text">
+            <div class="prompt-name">Reading</div>
+            <div class="prompt-sub">Goal: 20 minutes</div>
+          </div>
+          <div class="check-btn">○</div>
+        </div>
+      </div>
+
+      <div class="tab-bar">
+        <div class="tab-item active">
+          <span class="tab-icon">🌱</span>
+          Garden
+        </div>
+        <div class="tab-item">
+          <span class="tab-icon">📊</span>
+          Stats
+        </div>
+        <div class="tab-item">
+          <span class="tab-icon">⚙️</span>
+          Settings
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
