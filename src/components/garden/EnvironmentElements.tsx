@@ -37,68 +37,12 @@ const stateConfigs: Record<ZoneState, StateConfig> = {
 /**
  * Determine zone state based on 14-day consistency
  */
-function getZoneState(rate: number): ZoneState {
+export function getZoneState(rate: number): ZoneState {
   if (rate >= 90) return 'thriving';
   if (rate >= 70) return 'healthy';
   if (rate >= 50) return 'okay';
   if (rate >= 25) return 'struggling';
   return 'neglected';
-}
-
-/**
- * Calculate completion rate for last 14 days
- */
-export async function calculate14DayRate(habitId: number, userId: number): Promise<number> {
-  const { db } = await import('@/lib/db');
-  const { checkIns, habits } = await import('@/lib/db/schema');
-  const { eq, and, gte } = await import('drizzle-orm');
-
-  const today = new Date();
-  const fourteenDaysAgo = new Date(today);
-  fourteenDaysAgo.setDate(today.getDate() - 13);
-
-  const fourteenDaysStr = fourteenDaysAgo.toISOString().split('T')[0];
-  const todayStr = today.toISOString().split('T')[0];
-
-  const habit = await db.query.habits.findFirst({
-    where: eq(habits.id, habitId),
-  });
-
-  if (!habit) return 0;
-
-  const checkInsList = await db.query.checkIns.findMany({
-    where: and(
-      eq(checkIns.habitId, habitId),
-      eq(checkIns.userId, userId),
-      gte(checkIns.date, fourteenDaysStr),
-    ),
-  });
-
-  const checkInMap = new Map<string, boolean>();
-  checkInsList.forEach((ci) => {
-    if (ci.completed !== null) {
-      checkInMap.set(ci.date, ci.completed);
-    }
-  });
-
-  let completedDays = 0;
-  let totalDays = 0;
-  const createdDate = new Date(habit.createdAt);
-
-  for (let i = 0; i < 14; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() - i);
-    const dateStr = date.toISOString().split('T')[0];
-
-    if (date >= createdDate) {
-      totalDays++;
-      if (checkInMap.get(dateStr)) {
-        completedDays++;
-      }
-    }
-  }
-
-  return totalDays > 0 ? (completedDays / totalDays) * 100 : 0;
 }
 
 export function EnvironmentElements({ completionRate14Days }: EnvironmentElementsProps) {
@@ -134,11 +78,4 @@ export function EnvironmentElements({ completionRate14Days }: EnvironmentElement
       ))}
     </div>
   );
-}
-
-/**
- * Determine zone state from completion rate
- */
-export function getZoneStateFromRate(rate: number): ZoneState {
-  return getZoneState(rate);
 }
