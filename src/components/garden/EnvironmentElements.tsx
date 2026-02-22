@@ -1,10 +1,10 @@
 'use client';
 
+import { getZoneState, ZoneState } from '@/lib/garden/zoneState';
+
 interface EnvironmentElementsProps {
   completionRate14Days: number;
 }
-
-type ZoneState = 'thriving' | 'healthy' | 'okay' | 'struggling' | 'neglected';
 
 interface StateConfig {
   elements: string[];
@@ -33,17 +33,6 @@ const stateConfigs: Record<ZoneState, StateConfig> = {
     bgClass: 'bg-gray-100',
   },
 };
-
-/**
- * Determine zone state based on 14-day consistency
- */
-export function getZoneState(rate: number): ZoneState {
-  if (rate >= 90) return 'thriving';
-  if (rate >= 70) return 'healthy';
-  if (rate >= 50) return 'okay';
-  if (rate >= 25) return 'struggling';
-  return 'neglected';
-}
 
 export function EnvironmentElements({ completionRate14Days }: EnvironmentElementsProps) {
   const state = getZoneState(completionRate14Days);

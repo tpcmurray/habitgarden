@@ -14,9 +14,12 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  try {
-    const userId = parseInt(session.user.id);
+  const userId = parseInt(session.user.id);
+  if (isNaN(userId)) {
+    return NextResponse.json({ error: 'Invalid user session' }, { status: 401 });
+  }
 
+  try {
     // Get all active habits
     const userHabits = await db.query.habits.findMany({
       where: and(eq(habits.userId, userId), eq(habits.active, true)),

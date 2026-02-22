@@ -7,7 +7,7 @@ import { getAllHabitMoods } from '@/lib/garden/moods';
 import { calculate14DayRate, calculateAverageCompletionRate } from '@/lib/garden/calculations';
 import { SkyAtmosphere } from '@/components/garden/SkyAtmosphere';
 import { BuddyDisplay } from '@/components/garden/BuddyDisplay';
-import { getZoneState } from '@/components/garden/EnvironmentElements';
+import { getZoneState } from '@/lib/garden/zoneState';
 import Link from 'next/link';
 
 export default async function GardenPage() {

@@ -2,8 +2,8 @@
 module.exports = {
   schema: './src/lib/db/schema.ts',
   out: './drizzle',
-  dialect: 'postgresql',
+  driver: 'pg',
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL || '',
+    connectionString: 'postgresql://habitgarden_user:habitgarden_dev@localhost:5434/habitgarden',
   },
 };

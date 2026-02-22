@@ -12,9 +12,14 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
+  const userId = parseInt(session.user.id);
+  if (isNaN(userId)) {
+    return NextResponse.json({ error: 'Invalid user session' }, { status: 401 });
+  }
+
   try {
     const userHabits = await db.query.habits.findMany({
-      where: eq(habits.userId, parseInt(session.user.id)),
+      where: eq(habits.userId, userId),
       orderBy: [desc(habits.sortOrder), desc(habits.createdAt)],
     });
 
@@ -33,6 +38,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
+  const userId = parseInt(session.user.id);
+  if (isNaN(userId)) {
+    return NextResponse.json({ error: 'Invalid user session' }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const { name, emojiBuddy, direction, type, targetValue, targetUnit, frequency, customDays, reminderTime } = body;
@@ -45,7 +55,7 @@ export async function POST(request: NextRequest) {
     // Enforce 3-active-habit limit
     const existingActiveHabits = await db.query.habits.findMany({
       where: and(
-        eq(habits.userId, parseInt(session.user.id)),
+        eq(habits.userId, userId),
         eq(habits.active, true)
       ),
     });
@@ -59,7 +69,7 @@ export async function POST(request: NextRequest) {
 
     // Create the habit
     const newHabit = await db.insert(habits).values({
-      userId: parseInt(session.user.id),
+      userId: userId,
       name,
       emojiBuddy,
       direction: direction || 'build',
