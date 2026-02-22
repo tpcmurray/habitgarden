@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { BottomNav } from '@/components/navigation/BottomNav';
 
 interface Habit {
   id: number;
@@ -107,22 +108,7 @@ export default function HabitsPage() {
         )}
 
         {/* Bottom Navigation */}
-        <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
-          <div className="max-w-md mx-auto flex justify-around py-3">
-            <Link href="/garden" className="flex flex-col items-center text-gray-600 hover:text-green-600">
-              <span className="text-2xl">🏡</span>
-              <span className="text-xs">Garden</span>
-            </Link>
-            <Link href="/habits" className="flex flex-col items-center text-green-600">
-              <span className="text-2xl">✅</span>
-              <span className="text-xs">Habits</span>
-            </Link>
-            <Link href="/api/auth/signout" className="flex flex-col items-center text-gray-600 hover:text-red-600">
-              <span className="text-2xl">🚪</span>
-              <span className="text-xs">Logout</span>
-            </Link>
-          </div>
-        </nav>
+        <BottomNav />
       </main>
     </div>
   );

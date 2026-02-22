@@ -9,6 +9,8 @@ import { SkyAtmosphere } from '@/components/garden/SkyAtmosphere';
 import { BuddyDisplay } from '@/components/garden/BuddyDisplay';
 import { getZoneState } from '@/lib/garden/zoneState';
 import Link from 'next/link';
+import { BottomNav } from '@/components/navigation/BottomNav';
+import { CheckInPrompts } from '@/components/garden/CheckInPrompts';
 
 export default async function GardenPage() {
   const session = await auth();
@@ -215,25 +217,13 @@ export default async function GardenPage() {
             )}
           </div>
         )}
+
+        {/* Today's Check-in Prompts */}
+        <CheckInPrompts />
       </div>
 
-      {/* Bottom Navigation placeholder */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 pb-safe">
-        <div className="max-w-md mx-auto flex justify-around py-3">
-          <Link href="/garden" className="flex flex-col items-center text-green-600">
-            <span className="text-2xl">🌳</span>
-            <span className="text-xs">Garden</span>
-          </Link>
-          <Link href="/habits" className="flex flex-col items-center text-gray-400">
-            <span className="text-2xl">📋</span>
-            <span className="text-xs">Habits</span>
-          </Link>
-          <Link href="/analytics" className="flex flex-col items-center text-gray-400">
-            <span className="text-2xl">📊</span>
-            <span className="text-xs">Stats</span>
-          </Link>
-        </div>
-      </div>
+      {/* Bottom Navigation */}
+      <BottomNav />
     </div>
   );
 }
