@@ -92,15 +92,21 @@ function NewHabitForm({ onSubmit, isSubmitting }: NewHabitFormProps) {
     reminderTime: '',
   });
 
-  const emojis = ['🌱', '🏃', '📚', '💪', '🧘', '💧', '🍎', '😴', '🎯', '✍️', '🎨', '🎵', '🌟', '🦋', '🐱', '🐕', '🌸', '🍀', '🌈', '☀️', '🌙', '🔥', '💡', '🎁', '⭐', '🌻', '🦋', '🐝', '🪴', '🌲'];
+  const emojis = ['🏃','📚','🦉','💧','🧘','🎸','✍️','🍎','💪','🧹','🐕','🎨','🧠','🌅','💤','📱','🚭','🥗','🧑‍💻','🏋️','🚶','🎯','☕','🌿'];
 
   const updateFormData = (updates: Partial<typeof formData>) => {
     setFormData((prev) => ({ ...prev, ...updates }));
   };
 
   const handleNext = () => {
-    if (step === 1 && !formData.name.trim()) {
-      return;
+    if (step === 1) {
+      if (!formData.name.trim()) {
+        return;
+      }
+      // Require target value and unit for measured habits
+      if (formData.type === 'measured' && (!formData.targetValue || !formData.targetUnit)) {
+        return;
+      }
     }
     if (step === 2 && !formData.emojiBuddy) {
       return;
@@ -120,7 +126,7 @@ function NewHabitForm({ onSubmit, isSubmitting }: NewHabitFormProps) {
     <div className="space-y-6">
       {/* Progress indicator */}
       <div className="flex gap-2">
-        {[1, 2, 3].map((s) => (
+        {[1, 2].map((s) => (
           <div
             key={s}
             className={`h-2 flex-1 rounded-full ${
@@ -133,7 +139,7 @@ function NewHabitForm({ onSubmit, isSubmitting }: NewHabitFormProps) {
       {/* Step 1: Basic Info */}
       {step === 1 && (
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold">What habit do you want to build?</h2>
+          <h2 className="text-lg font-semibold">Create your habit</h2>
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -179,6 +185,84 @@ function NewHabitForm({ onSubmit, isSubmitting }: NewHabitFormProps) {
                 <span className="block text-xs">Stop a bad habit</span>
               </button>
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              How do you want to track it?
+            </label>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => updateFormData({ type: 'binary', targetValue: 1, targetUnit: '' })}
+                className={`flex-1 p-3 rounded-lg border-2 ${
+                  formData.type === 'binary'
+                    ? 'border-green-500 bg-green-50 text-green-700'
+                    : 'border-gray-200 text-gray-600'
+                }`}
+              >
+                ✅ Yes / No
+                <span className="block text-xs">Did you do it today?</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => updateFormData({ type: 'measured' })}
+                className={`flex-1 p-3 rounded-lg border-2 ${
+                  formData.type === 'measured'
+                    ? 'border-green-500 bg-green-50 text-green-700'
+                    : 'border-gray-200 text-gray-600'
+                }`}
+              >
+                📊 Track a number
+                <span className="block text-xs">Log a quantity</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Target value and unit - only shown for measured type */}
+          {formData.type === 'measured' && (
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Target
+                </label>
+                <input
+                  type="number"
+                  value={formData.targetValue || ''}
+                  onChange={(e) => updateFormData({ targetValue: parseInt(e.target.value) || 0 })}
+                  placeholder="20"
+                  className="w-full p-3 border border-gray-300 rounded-lg text-gray-900"
+                />
+              </div>
+              <div className="flex-1">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Unit
+                </label>
+                <input
+                  type="text"
+                  value={formData.targetUnit || ''}
+                  onChange={(e) => updateFormData({ targetUnit: e.target.value })}
+                  placeholder="minutes"
+                  className="w-full p-3 border border-gray-300 rounded-lg text-gray-900"
+                />
+              </div>
+            </div>
+          )}
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              How often?
+            </label>
+            <select
+              value={formData.frequency}
+              onChange={(e) => updateFormData({ frequency: e.target.value })}
+              className="w-full p-3 border border-gray-300 rounded-lg text-gray-900 bg-white"
+            >
+              <option value="daily">Daily</option>
+              <option value="weekdays">Weekdays</option>
+              <option value="weekends">Weekends</option>
+              <option value="custom">Custom days</option>
+            </select>
           </div>
 
           <button
@@ -231,30 +315,15 @@ function NewHabitForm({ onSubmit, isSubmitting }: NewHabitFormProps) {
         </div>
       )}
 
-      {/* Step 3: Frequency & Reminder */}
+      {/* Step 3: Reminder Time */}
       {step === 3 && (
         <div className="space-y-4">
-          <h2 className="text-lg font-semibold">How often?</h2>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Frequency
-            </label>
-            <select
-              value={formData.frequency}
-              onChange={(e) => updateFormData({ frequency: e.target.value })}
-              className="w-full p-3 border border-gray-300 rounded-lg text-gray-900 bg-white"
-            >
-              <option value="daily">Daily</option>
-              <option value="weekdays">Weekdays</option>
-              <option value="weekends">Weekends</option>
-              <option value="custom">Custom days</option>
-            </select>
-          </div>
+          <h2 className="text-lg font-semibold">Set a reminder (optional)</h2>
+          <p className="text-sm text-gray-500">Get notified when it's time to work on your habit</p>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Reminder time (optional)
+              Reminder time
             </label>
             <input
               type="time"

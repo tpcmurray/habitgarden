@@ -70,129 +70,121 @@ export default async function GardenPage() {
   const { average: averageCompletionRate, habitCount } = await calculateAverageCompletionRate(userId);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-green-50">
-      {/* Sky Atmosphere */}
-      <SkyAtmosphere
-        averageCompletionRate={averageCompletionRate}
-        habitCount={habitCount}
-      />
-
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-green-50 pb-20">
       {/* Garden Container */}
       <div className="max-w-md mx-auto p-4 pb-24">
-        <div className="bg-white/80 backdrop-blur rounded-2xl shadow-lg overflow-hidden">
-          {/* Garden Zones */}
-          <div className="p-4">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Your Garden</h2>
+        {/* Visual Garden - Wireframe Style */}
+        <div className="rounded-2xl overflow-hidden shadow-lg mb-6">
+          {/* Sky Atmosphere */}
+          <SkyAtmosphere
+            averageCompletionRate={averageCompletionRate}
+            habitCount={habitCount}
+          />
 
-            <div className="space-y-3">
-              {zones.length === 0 ? (
-                // Empty state
-                <div className="text-center py-12">
-                  <div className="text-6xl mb-4">🌱</div>
-                  <h3 className="text-lg font-medium text-gray-700 mb-2">
-                    Plant your first habit!
-                  </h3>
-                  <p className="text-gray-500 mb-4">
-                    Start your garden by adding a habit to track.
-                  </p>
-                  <Link
-                    href="/habits/new"
-                    className="btn btn-primary"
-                  >
-                    Add Habit 🌱
-                  </Link>
-                </div>
-              ) : (
-                zones.map((zone) => {
-                  const zoneState = getZoneState(zone.completionRate14Days);
-                  return (
-                    <Link
-                      key={zone.habitId}
-                      href={`/habits/${zone.habitId}`}
-                      className="block"
-                    >
-                      <div
-                        className={`rounded-xl p-4 transition-all hover:shadow-md ${
-                          zoneState === 'thriving' || zoneState === 'healthy'
-                            ? 'bg-green-50'
-                            : zoneState === 'okay'
-                            ? 'bg-yellow-50'
-                            : 'bg-orange-50'
-                        }`}
+          {/* Garden Zones - Horizontal Layout like Wireframes */}
+          <div 
+            className={`p-4 min-h-[280px] transition-all duration-500 ${
+              averageCompletionRate >= 70 
+                ? 'bg-gradient-to-b from-green-50/80 to-green-100/60' 
+                : averageCompletionRate >= 40 
+                  ? 'bg-gradient-to-b from-yellow-50/80 to-yellow-100/60'
+                  : 'bg-gradient-to-b from-orange-50/80 to-orange-100/60'
+            }`}
+          >
+            {zones.length === 0 ? (
+              // Empty state
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">🌱</div>
+                <h3 className="text-lg font-medium text-gray-700 mb-2">
+                  Plant your first habit!
+                </h3>
+                <p className="text-gray-500 mb-4">
+                  Start your garden by adding a habit to track.
+                </p>
+                <Link
+                  href="/habits/new"
+                  className="btn btn-primary"
+                >
+                  Add Habit 🌱
+                </Link>
+              </div>
+            ) : (
+              <>
+                {/* Horizontal Garden Zones - matching wireframes */}
+                <div className="flex gap-2 justify-center min-h-[200px]">
+                  {zones.map((zone) => {
+                    const zoneState = getZoneState(zone.completionRate14Days);
+                    return (
+                      <Link
+                        key={zone.habitId}
+                        href={`/habits/${zone.habitId}`}
+                        className="flex-1 bg-white/40 backdrop-blur-sm rounded-xl p-2 flex flex-col items-center transition-all hover:bg-white/60 hover:shadow-md"
                       >
-                        <div className="flex items-center gap-4">
-                          {/* Buddy */}
-                          <BuddyDisplay
-                            emoji={zone.emojiBuddy}
-                            mood={zone.mood.mood}
-                            showAnimation={zone.mood.animation === 'bounce' || zone.mood.animation === 'pulse'}
-                            size="medium"
-                            hat={zone.milestones?.hat}
-                          />
-
-                          {/* Info */}
-                          <div className="flex-1">
-                            <div className="font-medium text-gray-900">
-                              {zone.name}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {zone.mood.label} • {Math.round(zone.completionRate7Days)}% this week
-                            </div>
-                          </div>
-
-                          {/* Progress bar */}
-                          <div className="w-16">
-                            <div className="text-xs text-gray-500 text-right mb-1">
-                              {Math.round(zone.completionRate14Days)}%
-                            </div>
-                            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                              <div
-                                className={`h-full rounded-full ${
-                                  zoneState === 'thriving' || zoneState === 'healthy'
-                                    ? 'bg-green-500'
-                                    : zoneState === 'okay'
-                                    ? 'bg-yellow-500'
-                                    : 'bg-orange-500'
-                                }`}
-                                style={{ width: `${zone.completionRate14Days}%` }}
-                              />
-                            </div>
-                          </div>
+                        {/* Buddy with mood badge */}
+                        <div className="relative mb-1">
+                          <span className="text-4xl">{zone.emojiBuddy}</span>
+                          <span className="absolute -bottom-1 -right-2 text-lg bg-white rounded-full w-6 h-6 flex items-center justify-center shadow">
+                            {zone.mood.emoji}
+                          </span>
+                          {/* Hat */}
+                          {zone.milestones?.hat && (
+                            <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-lg">
+                              {zone.milestones.hat}
+                            </span>
+                          )}
                         </div>
 
-                        {/* Environment elements */}
-                        <div className="mt-3 flex gap-1 text-sm">
-                          {/* Landmark */}
-                          {zone.milestones?.landmark && (
-                            <span className="mr-2">{zone.milestones.landmark}</span>
-                          )}
-                          {/* Companion */}
-                          {zone.milestones?.companion && (
-                            <span className="mr-2">{zone.milestones.companion}</span>
-                          )}
-                          {/* Zone state elements */}
-                          {zoneState === 'thriving' && <span>🌳🌻🦋</span>}
-                          {zoneState === 'healthy' && <span>🌿🌸</span>}
-                          {zoneState === 'okay' && <span>🌱</span>}
-                          {zoneState === 'struggling' && <span>🍂</span>}
-                          {zoneState === 'neglected' && zone.completionRate14Days > 0 && <span>🥀</span>}
-                          {zone.completionRate14Days === 0 && <span>💤</span>}
+                        {/* Zone Name */}
+                        <div className="text-xs font-semibold text-gray-700 text-center truncate w-full">
+                          {zone.name}
                         </div>
-                      </div>
+
+                        {/* Cosmetics */}
+                        <div className="text-sm mb-1">
+                          {zone.milestones?.companion && <span>{zone.milestones.companion}</span>}
+                          {zone.milestones?.landmark && <span>{zone.milestones.landmark}</span>}
+                        </div>
+
+                        {/* Zone Plants - based on state */}
+                        <div className="text-sm flex gap-1 flex-wrap justify-center">
+                          {zoneState === 'thriving' && <><span>🌳</span><span>🌻</span><span>🦋</span></>}
+                          {zoneState === 'healthy' && <><span>🌿</span><span>🌸</span></>}
+                          {zoneState === 'okay' && <><span>🌱</span><span>🌾</span></>}
+                          {zoneState === 'struggling' && <><span>🍂</span><span>🥀</span></>}
+                          {zoneState === 'neglected' && zone.completionRate14Days > 0 && <><span>🍂</span><span>🕸️</span></>}
+                          {zoneState === 'neglected' && zone.completionRate14Days === 0 && <><span>💤</span></>}
+                        </div>
+
+                        {/* Empty zone placeholder */}
+                        {zones.length < 3 && (
+                          <div className="mt-auto pt-2">
+                            <div className="text-2xl text-gray-300">+</div>
+                          </div>
+                        )}
+                      </Link>
+                    );
+                  })}
+
+                  {/* Add habit zone if less than 3 habits */}
+                  {zones.length > 0 && zones.length < 3 && (
+                    <Link
+                      href="/habits/new"
+                      className="flex-1 border-2 border-dashed border-gray-300 rounded-xl p-2 flex flex-col items-center justify-center hover:border-green-400 hover:bg-green-50/50 transition-all"
+                    >
+                      <span className="text-3xl text-gray-400 mb-1">🌱</span>
+                      <span className="text-xs text-gray-400">Add habit</span>
                     </Link>
-                  );
-                })
-              )}
-            </div>
+                  )}
+                </div>
 
-            {/* Add habit button (if less than 3) */}
-            {zones.length > 0 && zones.length < 3 && (
-              <Link
-                href="/habits/new"
-                className="mt-4 w-full btn btn-secondary border-2 border-dashed border-gray-300"
-              >
-                + Add another habit
-              </Link>
+                {/* Garden Ground */}
+                <div className="text-center text-lg mt-2">
+                  {averageCompletionRate >= 70 && <span>🌿 · 🪨 · 🌿 · · 🍄 · 🌿</span>}
+                  {averageCompletionRate >= 40 && averageCompletionRate < 70 && <span>🌿 · · 🌿 · · 🌾 · ·</span>}
+                  {averageCompletionRate > 0 && averageCompletionRate < 40 && <span>🍂 · · 🍂 · · 🍂 · ·</span>}
+                  {averageCompletionRate === 0 && <span>🕸️ · · · · · · ·</span>}
+                </div>
+              </>
             )}
           </div>
         </div>
